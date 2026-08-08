@@ -22,20 +22,33 @@ stages:
           - checkout: self
           - task: TerraformInstaller@1
             inputs:
-                terraformVersion: '>= 1.6.0'
+                terraformVersion: 'latest'
 
           - task: TerraformTask@5
             inputs:
                 provider: 'azurerm'
                 command: 'init'
-                backendAzureRmUseEntraIdForAuthentication: false
                 backendServiceArm: 'hdfc-manual'
                 backendAzureRmOverrideSubscriptionID: '10aa60ae-f0de-417b-9d25-97aee7d905cb'
                 backendAzureRmResourceGroupName: 'capstone-rg'
                 backendAzureRmStorageAccountName: 'credpaysa95'
                 backendAzureRmContainerName: 'statefile'
                 backendAzureRmKey: 'credpay.terraform.tfstate'
-          
+          - task: TerraformTask@5
+            inputs:
+              provider: 'azurerm'
+              command: 'plan'
+              environmentServiceNameAzureRM: 'hdfc-manual'
+          - task: TerraformTask@5
+            inputs:
+              provider: 'azurerm'
+              command: 'apply'
+              environmentServiceNameAzureRM: 'hdfc-manual'
+          - task: TerraformTask@5
+            inputs:
+              provider: 'azurerm'
+              command: 'destroy'
+              environmentServiceNameAzureRM: 'hdfc-manual'
 
 #   - stage: dockerbuild
 #     displayName: docker build
