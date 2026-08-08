@@ -44,11 +44,11 @@ stages:
               provider: 'azurerm'
               command: 'apply'
               environmentServiceNameAzureRM: 'hdfc-manual'
-          - task: TerraformTask@5
-            inputs:
-              provider: 'azurerm'
-              command: 'destroy'
-              environmentServiceNameAzureRM: 'hdfc-manual'
+          # - task: TerraformTask@5
+          #   inputs:
+          #     provider: 'azurerm'
+          #     command: 'destroy'
+          #     environmentServiceNameAzureRM: 'hdfc-manual'
 
 #   - stage: dockerbuild
 #     displayName: docker build
