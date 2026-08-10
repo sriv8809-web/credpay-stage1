@@ -1,0 +1,15 @@
+apiVersion: apps/v1
+kind: deployment
+metadata:
+  name: payment-service
+  namespace: credpay
+  labels:
+    app.kubernetes.io/part-of: credpay
+  spec:
+    replicas: 2
+    revisionHistoryLimit: 3
+    selector:
+      matchLabels:
+        app.kubernetes.io/name:payment-service
+      strategy:
+        type:

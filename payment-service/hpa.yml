@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: payment-service-hpa
+  namespace: credpay
+  labels:
+    app.kubernetes.io/name:

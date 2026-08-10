@@ -1,35 +1,31 @@
-# Name added to the resources
 variable "name_prefix" {
-  type = string
+    description = "The prefix for the resource names."
+    type        = string
 }
-
-# Resource group name
 variable "resource_group_name" {
-  type = string
+    description = "The name of the resource group."
+    type        = string
 }
-
-# Azure region
 variable "location" {
-  type = string
+    description = "The location for the resources."
+    type        = string
 }
-
-# PostgreSQL admin username
 variable "admin_username" {
-  type = string
+    description = "The admin username for the PostgreSQL server."
+    type        = string
 }
-
-# Database name
 variable "database_name" {
-  type = string
+    description = "The name of the PostgreSQL database."
+    type        = string
 }
-
-# PostgreSQL major version
 variable "postgres_version" {
-  type = string
+    description = "The version of PostgreSQL to use."
+    type        = string
 }
-
-# Tags to apply
 variable "tags" {
-  type    = map(string)
-  default = {}
+    description = "A map of tags to assign to the resources."
+    type        = map(string)
+    default     = {
+        environment = "dev"
+    }
 }

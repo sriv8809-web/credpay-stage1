@@ -1,26 +1,23 @@
 variable "name_prefix" {
-  description = "Naming prefix (project-environment)."
-  type        = string
+    description = "The prefix for the resource names."
+    type        = string
 }
-
 variable "resource_group_name" {
-  description = "Resource group name."
-  type        = string
+    description = "The name of the resource group."
+    type        = string
 }
-
 variable "location" {
-  description = "Azure region."
-  type        = string
+    description = "The location for the resources."
+    type        = string
 }
-
 variable "retention_days" {
-  description = "Log Analytics retention in days."
-  type        = number
-  default     = 30
+    description = "The number of days to retain logs in the Log Analytics workspace."
+    type        = number
 }
-
 variable "tags" {
-  description = "Tags to apply."
-  type        = map(string)
-  default     = {}
+    description = "A map of tags to assign to the resources."
+    type        = map(string)
+    default     = {
+        environment = "dev"
+    }
 }

@@ -1,0 +1,7 @@
+api-Version: v1
+kind: Namespace
+metadata:
+  name: credpay
+  labels:
+    app.kubernetes.io/part-of: credpay
+    pod-security.kubernetes.io/enforce: baseline

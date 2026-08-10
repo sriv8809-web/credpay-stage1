@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: deployment
+metadata:
+  name: user-service
+  namespace: credpay
+  labels:
+    app.kubernetes.io/part-of: credpay
+  spec:
+    replicas: 2
+    revisionHistoryLimit: 3
+    selector:
+      matchLabels:
+        app.kubernetes.io/name:user-service
+      strategy:
+        type: RollingUpdate
+        rollingUpdate:
+          maxSurge: 1
+          maxUnavailable: 1
+    template:
+      metadata:
+        labels:
+          app.kubernetes.io/partof: user-service
+          app
+
