@@ -13,40 +13,94 @@ variables:
   paymentrepository: 'credpay/payment-service'
   tag: '$(Build.BuildId)'
 stages:
-  - stage: dockerbuild
-    displayName: docker build
+  - stage: terraform
+    displayName: terraform infra
     jobs:
-      - job: buildpushimages
+      - job: terraformapply
+        displayName: terraform init and apply
         steps:
           - checkout: self
-          - task: Docker@2
+          - task: TerraformInstaller@1
             inputs:
-              containerRegistry: 'acr_serviceconnection'
-              repository: '$(frontendrepository)'
-              command: 'buildAndPush'
-              Dockerfile: 'frontend-react/dockerfile'
-              buildContext: 'frontend-react'
-              tags: |
-                $(tag)
-                latest
+                terraformVersion: 'latest'
+
+          - task: AzureCLI@3
+            inputs:
+              connectionType: 'azureRM'
+              azureSubscription: 'hdfc-manual'
+              scriptType: 'bash'
+              scriptLocation: 'inlineScript'
+              inlineScript: |
+                #cd terraform
+                terraform init
+                terraform plan -var-file=terraform.tfvars
+                #terraform apply --auto-approve 
+                
+
+          # - task: TerraformTask@5
+          #   inputs:
+          #       provider: 'azurerm'
+          #       command: 'init'
+          #       workingDirectory: '$(System.DefaultWorkingDirectory)/terraform'
+          #       backendServiceArm: 'hdfc-manual'
+          #       backendAzureRmOverrideSubscriptionID: '10aa60ae-f0de-417b-9d25-97aee7d905cb'
+          #       backendAzureRmResourceGroupName: 'capstone-rg'
+          #       backendAzureRmStorageAccountName: 'credpaysa95'
+          #       backendAzureRmContainerName: 'statefile'
+          #       backendAzureRmKey: 'credpay.terraform.tfstate'
+          # - task: TerraformTask@5
+          #   inputs:
+          #     provider: 'azurerm'
+          #     command: 'plan'
+          #     workingDirectory: '$(System.DefaultWorkingDirectory)/terraform'
+          #     environmentServiceNameAzureRM: 'hdfc-manual'
+          # - task: TerraformTask@5
+          #   inputs:
+          #     provider: 'azurerm'
+          #     command: 'apply'
+          #     workingDirectory: '$(System.DefaultWorkingDirectory)/terraform'
+          #     environmentServiceNameAzureRM: 'hdfc-manual'
+          # - task: TerraformTask@5
+          #   inputs:
+          #     provider: 'azurerm'
+          #     command: 'destroy'
+          #     environmentServiceNameAzureRM: 'hdfc-manual'
+
+#   - stage: dockerbuild
+#     displayName: docker build
+#     jobs:
+#       - job: buildpushimages
+#         steps:
+#           - checkout: self
+#           - task: Docker@2
+#             inputs:
+#               containerRegistry: 'acr_serviceconnection'
+#               repository: '$(frontendrepository)'
+#               command: 'buildAndPush'
+#               Dockerfile: 'frontend-react/dockerfile'
+#               buildContext: 'frontend-react'
+#               tags: |
+#                 $(tag)
+#                 latest
           
-          - task: Docker@2
-            inputs:
-              containerRegistry: 'acr_serviceconnection'
-              repository: 'userrepository'
-              command: 'buildAndPush'
-              Dockerfile: 'user-service/dockerfile'
-              buildContext: 'user-service'
-              tags: |
-                $(tag)
-                latest
-          - task: Docker@2
-            inputs:
-              containerRegistry: 'acr_serviceconnection'
-              repository: 'paymentrepository'
-              command: 'buildAndPush'
-              Dockerfile: 'payment-service/dockerfile'
-              buildContext: 'payment-service'
-              tags: |
-                $(tag)
-                latest
+#           - task: Docker@2
+#             inputs:
+#               containerRegistry: 'acr_serviceconnection'
+#               repository: 'userrepository'
+#               command: 'buildAndPush'
+#               Dockerfile: 'user-service/dockerfile'
+#               buildContext: 'user-service'
+#               tags: |
+#                 $(tag)
+#                 latest
+#           - task: Docker@2
+#             inputs:
+#               containerRegistry: 'acr_serviceconnection'
+#               repository: 'paymentrepository'
+#               command: 'buildAndPush'
+#               Dockerfile: 'payment-service/dockerfile'
+#               buildContext: 'payment-service'
+#               tags: |
+#                 $(tag)
+#                 latest
+          
