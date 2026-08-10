@@ -23,6 +23,7 @@ stages:
           - task: TerraformInstaller@1
             inputs:
                 terraformVersion: 'latest'
+
           - task: AzureCLI@3
             inputs:
               connectionType: 'azureRM'
@@ -32,7 +33,7 @@ stages:
               inlineScript: |
                 cd terraform
                 terraform init
-                terraform plan -var-file="terraform.tfvars"
+                terraform plan -var-file=terraform.tfvars
 
           # - task: TerraformTask@5
           #   inputs:
