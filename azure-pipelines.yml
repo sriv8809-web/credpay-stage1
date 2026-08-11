@@ -30,6 +30,7 @@ stages:
               azureSubscription: 'hdfc-manual'
               scriptType: 'bash'
               scriptLocation: 'inlineScript'
+              workingDirectory: terraform
               inlineScript: |
                 #cd terraform
                 terraform init
