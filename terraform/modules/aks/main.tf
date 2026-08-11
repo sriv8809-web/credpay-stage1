@@ -20,7 +20,7 @@ resource "azurerm_kubernetes_cluster" "aks" {
     name       = "system"
     node_count = var.node_count
     vm_size    = var.vm_size
-    #auto_scaling_enabled = true
+    auto_scaling_enabled = true
       min_count = var.node_min_count
       max_count = var.node_max_count
       vnet_subnet_id = var.aks_subnet_id
